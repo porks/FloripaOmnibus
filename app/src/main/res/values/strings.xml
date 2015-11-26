@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FloripaOmnibus</string>
+    <string name="actmain_btnsearch">Search</string>
+    <string name="actmain_edtsearch">Type the street</string>
+</resources>
