@@ -141,6 +141,11 @@ public class ActMain extends AppCompatActivity {
                     // Get the Street Name
                     String streetName = data.getStringExtra("streetName");
 
+                    // Remove the first word (Street, Avenue, etc)
+                    String[] aux = streetName.split(" ");
+                    if (aux.length > 1)
+                        streetName = streetName.substring(aux[0].length() + 1, streetName.length());
+
                     // Some validations
                     if (streetName == null) {
                         Toast.makeText(ActMain.this, "Invalid Street Name", Toast.LENGTH_LONG).show();
@@ -236,7 +241,7 @@ public class ActMain extends AppCompatActivity {
                             View row;
                             if (convertView == null) {
                                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                                row = inflater.inflate(R.layout.listview_routes, parent);
+                                row = inflater.inflate(R.layout.listview_routes, null);
                             } else {
                                 row = convertView;
                             }

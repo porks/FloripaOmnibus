@@ -35,7 +35,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_departure_child, parent);
+            convertView = inflater.inflate(R.layout.listview_departure_child, null);
         }
 
         final String children = (String) this.getChild(groupPosition, childPosition);
@@ -70,7 +70,7 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_departure_group, parent);
+            convertView = inflater.inflate(R.layout.listview_departure_group, null);
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.ListViewDepartureGroup_Text1);

@@ -137,10 +137,10 @@ public class TabDeparture extends Fragment {
             }
 
             // Build an Array from the HashMap
-            final DepartureDay[] arrayDepartureDays = (DepartureDay[]) hashDepartureDays.values().toArray();
+            final DepartureDay[] arrayDepartureDays = hashDepartureDays.values().toArray(new DepartureDay[0]);
 
             // Set the Spinner Adapter
-            this.spnDays.setAdapter(new ArrayAdapter<>(TabDeparture.this.getActivity(), R.layout.spinner_item, arrayDepartureDays));
+            this.spnDays.setAdapter(new ArrayAdapter<DepartureDay>(TabDeparture.this.getActivity(), R.layout.spinner_item, arrayDepartureDays));
             this.spnDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -148,7 +148,7 @@ public class TabDeparture extends Fragment {
                     try {
                         // Build an Array from the HashMap
                         DepartureDay day = arrayDepartureDays[position];
-                        final DepartureHour[] arrayDepartureHours = (DepartureHour[]) day.getHashMapHours().values().toArray();
+                        final DepartureHour[] arrayDepartureHours = day.getHashMapHours().values().toArray(new DepartureHour[0]);
 
 
                         // Set the list in the ListView

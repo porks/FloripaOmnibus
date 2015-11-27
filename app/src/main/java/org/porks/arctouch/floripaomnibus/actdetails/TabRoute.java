@@ -106,7 +106,7 @@ public class TabRoute extends Fragment {
                             View row;
                             if (convertView == null) {
                                 LayoutInflater inflater = (LayoutInflater) TabRoute.this.getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                                row = inflater.inflate(R.layout.listview_routestops, parent);
+                                row = inflater.inflate(R.layout.listview_routestops, null);
                             } else {
                                 row = convertView;
                             }
