@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.SocketException;
 
 /**
- * Validate the param to the WS, Call the Web Servce and return the response of the WS
+ * Validate the param to the WS, Call the Web Service and return the response of the WS
  *
  * @author Marcelo
  */
@@ -17,12 +17,12 @@ public class WSTask extends AsyncTask<WSParam, Integer, TaskResult> {
     /**
      * Simple progress dialog
      */
-    private ProgressDialog dialog;
+    private final ProgressDialog dialog;
 
     /**
      * CallBack to update the activity
      */
-    private TaskCallBack callBack;
+    private final TaskCallBack callBack;
 
     public WSTask(Activity activity, TaskCallBack callBack) {
         this.dialog = new ProgressDialog(activity);
@@ -171,7 +171,7 @@ public class WSTask extends AsyncTask<WSParam, Integer, TaskResult> {
                 return result;
             }
 
-            // Sucesso
+            // Success
             TaskResult result = new TaskResult();
             result.setJsonObj(jsonResponse);
             return result;

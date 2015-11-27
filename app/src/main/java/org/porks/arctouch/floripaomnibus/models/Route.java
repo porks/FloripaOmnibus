@@ -7,17 +7,17 @@ public class Route {
     /**
      * route's ID
      */
-    private int id;
+    private final int id;
 
     /**
      * Short name for the route
      */
-    private String shortName;
+    private final String shortName;
 
     /**
      * Long name for the route
      */
-    private String longName;
+    private final String longName;
 
     public Route(int id, String shortName, String longName) {
         this.id = id;

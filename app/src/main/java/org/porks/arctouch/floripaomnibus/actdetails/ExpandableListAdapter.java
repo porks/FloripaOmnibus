@@ -1,24 +1,19 @@
 package org.porks.arctouch.floripaomnibus.actdetails;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.porks.arctouch.floripaomnibus.R;
-import org.porks.arctouch.floripaomnibus.models.DepartureDay;
 import org.porks.arctouch.floripaomnibus.models.DepartureHour;
 
 /**
  * Implements Adapter for the ExpandableListView using the bus' Departures
  */
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final DepartureHour[] arrayDepartureHours;
 
     public ExpandableListAdapter(DepartureHour[] arrayDepartureHours) {
@@ -40,7 +35,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_departure_child, null);
+            convertView = inflater.inflate(R.layout.listview_departure_child, parent);
         }
 
         final String children = (String) this.getChild(groupPosition, childPosition);
@@ -66,16 +61,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
-    }
-
-    @Override
-    public void onGroupExpanded(int groupPosition) {
-        super.onGroupExpanded(groupPosition);
-    }
-
-    @Override
     public long getGroupId(int groupPosition) {
         return 0;
     }
@@ -85,7 +70,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_departure_group, null);
+            convertView = inflater.inflate(R.layout.listview_departure_group, parent);
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.ListViewDepartureGroup_Text1);

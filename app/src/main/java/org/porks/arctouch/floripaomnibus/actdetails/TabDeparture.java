@@ -42,11 +42,6 @@ public class TabDeparture extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout
@@ -128,7 +123,7 @@ public class TabDeparture extends Fragment {
                 if (time.length() == 5)
                     timeHour = time.substring(0, 2);
                 if ((hour == null) || (!hour.getHourName().equals(timeHour))) {
-                    // Teste if the hour exists in the HashMap
+                    // Test if the hour exists in the HashMap
                     hour = day.getHashMapHours().get(timeHour);
                     if (hour == null) {
                         // Create the new hour and add to the HashMap
@@ -142,10 +137,10 @@ public class TabDeparture extends Fragment {
             }
 
             // Build an Array from the HashMap
-            final DepartureDay[] arrayDepartureDays = hashDepartureDays.values().toArray(new DepartureDay[0]);
+            final DepartureDay[] arrayDepartureDays = (DepartureDay[]) hashDepartureDays.values().toArray();
 
             // Set the Spinner Adapter
-            this.spnDays.setAdapter(new ArrayAdapter<DepartureDay>(TabDeparture.this.getActivity(), R.layout.spinner_item, arrayDepartureDays));
+            this.spnDays.setAdapter(new ArrayAdapter<>(TabDeparture.this.getActivity(), R.layout.spinner_item, arrayDepartureDays));
             this.spnDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -153,7 +148,7 @@ public class TabDeparture extends Fragment {
                     try {
                         // Build an Array from the HashMap
                         DepartureDay day = arrayDepartureDays[position];
-                        final DepartureHour[] arrayDepartureHours = day.getHashMapHours().values().toArray(new DepartureHour[0]);
+                        final DepartureHour[] arrayDepartureHours = (DepartureHour[]) day.getHashMapHours().values().toArray();
 
 
                         // Set the list in the ListView

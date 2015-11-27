@@ -21,7 +21,8 @@
         android:text="New Text"
         android:id="@+id/ListViewRoute_Text2"
         android:textColor="@android:color/black"
-        android:paddingLeft="@dimen/listview_routes_padding_text2"
+        android:paddingStart="@dimen/listview_routes_padding_text2"
+        android:paddingEnd="@dimen/listview_routes_padding_text2"
         android:textSize="@dimen/listview_routes_text2_size"
         android:gravity="center_vertical" />
 </LinearLayout>

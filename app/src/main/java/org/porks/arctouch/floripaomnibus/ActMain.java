@@ -37,17 +37,23 @@ public class ActMain extends AppCompatActivity {
     private ListView lsvResult = null;
 
     /**
-     * Persiste the JSON data when the Activity is recreated
+     * Persist the JSON data when the Activity is recreated
      */
     private String routesJSON = null;
+
+    /**
+     * Value when we call the Map Activity to get the Street name from the Map
+     */
+    private static final int MAP_STREET_NAME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actmain);
 
-        // Create the event onclick for the search button
+        // Create the event onclick for the search and map buttons
         this.findViewById(R.id.ActMain_BtnSearch).setOnClickListener(this.btnSearch_Click);
+        this.findViewById(R.id.ActMain_BtnMap).setOnClickListener(this.btnMap_Click);
 
         // The ListView to output the result
         this.lsvResult = (ListView) this.findViewById(R.id.ActMain_LsvResult);
@@ -97,14 +103,8 @@ public class ActMain extends AppCompatActivity {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(ActMain.this.edtSearch.getWindowToken(), 0);
 
-                // Make the search at the WS
-                WSParam wsParam = new WSParam(WSParam.URL_FIND_ROUTES_BY_STOPNAME, "stopName", "%" + ActMain.this.edtSearch.getText() + "%");
-                WSTask wsTask = new WSTask(ActMain.this, ActMain.this.searchCallBack);
-                wsTask.execute(wsParam);
-
-//                TaskResult result = new TaskResult();
-//                result.setJsonObj(new JSONObject("{\"rows\":[{\"id\":17,\"shortName\":\"134\",\"longName\":\"BEIRA-MAR NORTE\",\"lastModifiedDate\":\"2013-03-04T03:00:00+0000\",\"agencyId\":9},{\"id\":22,\"shortName\":\"131\",\"longName\":\"AGRONÔMICA VIA GAMA D'EÇA\",\"lastModifiedDate\":\"2009-10-26T02:00:00+0000\",\"agencyId\":9},{\"id\":32,\"shortName\":\"133\",\"longName\":\"AGRONÔMICA VIA MAURO RAMOS\",\"lastModifiedDate\":\"2012-07-23T03:00:00+0000\",\"agencyId\":9},{\"id\":35,\"shortName\":\"185\",\"longName\":\"UFSC SEMI DIRETO\",\"lastModifiedDate\":\"2013-06-10T03:00:00+0000\",\"agencyId\":9}],\"rowsAffected\":0}"));
-//                ActMain.this.searchCallBack.onComplete(result);
+                // Make the search
+                ActMain.this.searchRoutes();
             } catch (Exception ex) {
                 Toast.makeText(ActMain.this, "Error calling the Web Service", Toast.LENGTH_LONG).show();
             }
@@ -112,9 +112,76 @@ public class ActMain extends AppCompatActivity {
     };
 
     /**
+     * Open the Map dialog
+     */
+    private final View.OnClickListener btnMap_Click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // Start the Map Activity expecting a result (street name)
+            Intent mapIntent = new Intent(ActMain.this, ActMap.class);
+            ActMain.this.startActivityForResult(mapIntent, ActMain.MAP_STREET_NAME);
+        }
+    };
+
+    /**
+     * Called when an Activity returns after been called for a result
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            // Identify the caller
+            switch (requestCode) {
+                case ActMain.MAP_STREET_NAME:
+                    // Return if not OK
+                    if (resultCode != RESULT_OK) {
+                        Toast.makeText(ActMain.this, "Could not get the Street Name", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    // Get the Street Name
+                    String streetName = data.getStringExtra("streetName");
+
+                    // Some validations
+                    if (streetName == null) {
+                        Toast.makeText(ActMain.this, "Invalid Street Name", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    // Make the search, setting in the GUI the street name
+                    ActMain.this.edtSearch.setText(streetName);
+                    ActMain.this.searchRoutes();
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception ex) {
+            Toast.makeText(ActMain.this, "Error making the search", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Make the Call to the WS searching for the Routes
+     */
+    private void searchRoutes() {
+        try {
+            // Make the search at the WS
+            WSParam wsParam = new WSParam(WSParam.URL_FIND_ROUTES_BY_STOPNAME, "stopName", "%" + ActMain.this.edtSearch.getText() + "%");
+            WSTask wsTask = new WSTask(ActMain.this, ActMain.this.searchCallBack);
+            wsTask.execute(wsParam);
+
+//            // Mock the WS Call, using a pre-loaded JSON response
+//            TaskResult result = new TaskResult();
+//            result.setJsonObj(new JSONObject("{\"rows\":[{\"id\":17,\"shortName\":\"134\",\"longName\":\"BEIRA-MAR NORTE\",\"lastModifiedDate\":\"2013-03-04T03:00:00+0000\",\"agencyId\":9},{\"id\":22,\"shortName\":\"131\",\"longName\":\"AGRONÔMICA VIA GAMA D'EÇA\",\"lastModifiedDate\":\"2009-10-26T02:00:00+0000\",\"agencyId\":9},{\"id\":32,\"shortName\":\"133\",\"longName\":\"AGRONÔMICA VIA MAURO RAMOS\",\"lastModifiedDate\":\"2012-07-23T03:00:00+0000\",\"agencyId\":9},{\"id\":35,\"shortName\":\"185\",\"longName\":\"UFSC SEMI DIRETO\",\"lastModifiedDate\":\"2013-06-10T03:00:00+0000\",\"agencyId\":9}],\"rowsAffected\":0}"));
+//            ActMain.this.searchCallBack.onComplete(result);
+        } catch (Exception ex) {
+            Toast.makeText(ActMain.this, "Error making the routes' search", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
      * When the WS returns this method is called
      */
-    private TaskCallBack searchCallBack = new TaskCallBack() {
+    private final TaskCallBack searchCallBack = new TaskCallBack() {
         @Override
         public void onComplete(TaskResult result) {
             try {
@@ -169,7 +236,7 @@ public class ActMain extends AppCompatActivity {
                             View row;
                             if (convertView == null) {
                                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                                row = inflater.inflate(R.layout.listview_routes, null);
+                                row = inflater.inflate(R.layout.listview_routes, parent);
                             } else {
                                 row = convertView;
                             }

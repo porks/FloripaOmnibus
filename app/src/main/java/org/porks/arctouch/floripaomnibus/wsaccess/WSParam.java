@@ -58,23 +58,23 @@ public class WSParam {
     }
 
     /**
-     * Set the WS call's param
+     * Set the WS call param
      *
      * @param name  Parameter name
      * @param value Parameter value as <code>int</code>
      */
 
-    public void setParam(String name, int value) throws org.json.JSONException {
+    private void setParam(String name, int value) throws org.json.JSONException {
         this.body.put(name, value);
     }
 
     /**
-     * Set the WS call's param
+     * Set the WS call param
      *
      * @param name  Parameter name
      * @param value Parameter value as <code>String</code>
      */
-    public void setParam(String name, String value) throws org.json.JSONException {
+    private void setParam(String name, String value) throws org.json.JSONException {
         this.body.put(name, value);
     }
 
@@ -98,7 +98,7 @@ public class WSParam {
         return this.url;
     }
 
-    public void setUrl(String url) {
+    private void setUrl(String url) {
         this.url = url;
     }
 }

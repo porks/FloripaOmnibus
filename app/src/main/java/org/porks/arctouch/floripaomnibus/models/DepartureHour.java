@@ -10,12 +10,12 @@ public class DepartureHour {
     /**
      * Hour of the day
      */
-    private String hourName;
+    private final String hourName;
 
     /**
      * List with the Departures of the hour
      */
-    private List<String> listDeparture = new ArrayList<>();
+    private final List<String> listDeparture = new ArrayList<>();
 
     public DepartureHour(String hourName) {
         this.hourName = hourName;

@@ -1,5 +1,6 @@
 package org.porks.arctouch.floripaomnibus;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
@@ -20,17 +21,6 @@ import java.util.Locale;
 
 public class ActMap extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener {
-
-    /**
-     * The Map it self
-     */
-    private GoogleMap gMap;
-
-    /**
-     * The Map Fragment, used to load the map inside the Activity
-     */
-    private MapFragment gMapFragment;
-
     /**
      * Fixed location at the 'Hercílio Luz' bridge.<br />
      * We will use this as the start location in Florianópolis
@@ -45,8 +35,8 @@ public class ActMap extends AppCompatActivity implements OnMapReadyCallback,
 
         // Get the MapFragment and inform the async callback listener
         // to be called when the map is ready
-        this.gMapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.ActMaps_Map);
-        this.gMapFragment.getMapAsync(this);
+        MapFragment gMapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.ActMap_Map);
+        gMapFragment.getMapAsync(this);
     }
 
     /**
@@ -56,10 +46,10 @@ public class ActMap extends AppCompatActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         try {
             // Map is ready to be used.
-            this.gMap = googleMap;
+            GoogleMap gMap = googleMap;
 
             // Set the Long Click listener to set the position where the users want to search for bus routes
-            this.gMap.setOnMapLongClickListener(this);
+            gMap.setOnMapLongClickListener(this);
 
             // We will fix our start location at the Hercílio Luz Bridge,
             // just for sake of this exercise (it is about Florianóplis)
@@ -68,11 +58,11 @@ public class ActMap extends AppCompatActivity implements OnMapReadyCallback,
             // Map a Sample Marker int the map
             MarkerOptions marker = new MarkerOptions().title("Start Point").position(fixedStart)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            this.gMap.addMarker(marker);
+            gMap.addMarker(marker);
 
             // Position the map in our current location
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(fixedStart, 15);
-            this.gMap.moveCamera(update);
+            gMap.moveCamera(update);
         } catch (Exception ex) {
             Toast.makeText(ActMap.this, "Error starting the Google Maps", Toast.LENGTH_LONG).show();
         }
@@ -93,6 +83,10 @@ public class ActMap extends AppCompatActivity implements OnMapReadyCallback,
             String streetName = addresses.get(0).getThoroughfare();
 
             // Return for the calling Activity informing the street name
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("streetName", streetName);
+            ActMap.this.setResult(RESULT_OK, resultIntent);
+            ActMap.this.finish();
         } catch (Exception ex) {
             Toast.makeText(ActMap.this, "Error getting the street address", Toast.LENGTH_LONG).show();
         }

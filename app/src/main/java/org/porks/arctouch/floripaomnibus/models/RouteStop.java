@@ -5,19 +5,19 @@ package org.porks.arctouch.floripaomnibus.models;
  */
 public class RouteStop {
     /**
-     * stop's ID
+     * stop ID
      */
-    private int id;
+    private final int id;
 
     /**
      * Name for the stop (street name)
      */
-    private String name;
+    private final String name;
 
     /**
      * Sequence of the Stop inside the route
      */
-    private int sequence;
+    private final int sequence;
 
     public RouteStop(int id, String name, int sequence) {
         this.id = id;

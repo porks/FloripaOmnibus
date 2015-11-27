@@ -9,12 +9,12 @@ public class DepartureDay {
     /**
      * Name of the day
      */
-    private String dayName;
+    private final String dayName;
 
     /**
      * List with the Departures grouped by the hour of the day
      */
-    private TreeMap<String, DepartureHour> hashMapHours = new TreeMap<>();
+    private final TreeMap<String, DepartureHour> hashMapHours = new TreeMap<>();
 
     public DepartureDay(String dayName) {
         this.dayName = dayName;
