@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin_generic"
+    tools:context="org.porks.arctouch.floripaomnibus.ActMain">
+
+    <EditText
+        android:id="@+id/ActMain_EdtSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ActMain_BtnSearch"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/ActMain_BtnSearch"
+        android:hint="@string/actmain_edtsearch"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/ActMain_BtnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ActMain_LsvResult"
+        android:layout_below="@+id/ActMain_EdtSearch"
+        android:text="@string/actmain_btnsearch" />
+
+    <Button
+        android:id="@+id/ActMain_BtnMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ActMain_EdtSearch"
+        android:text="@string/actmain_btnmap" />
+
+    <ListView
+        android:id="@+id/ActMain_LsvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ActMain_BtnSearch"
+        android:layout_marginTop="@dimen/listview_padding" />
+</RelativeLayout>

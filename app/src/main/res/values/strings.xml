@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FloripaOmnibus</string>
+    <string name="actmain_btnsearch">Search</string>
+    <string name="actmain_btnmap">Map</string>
+    <string name="actmain_edtsearch">Type the street</string>
+
+    <string name="actmap_textinfo">Long Click to define the spot that will be searched</string>
+
+    <string name="google_maps_key">AIzaSyAqPUAfE5NcYVUDjHg5ztyDaVnKajaxC5k</string>
+</resources>

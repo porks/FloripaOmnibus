@@ -1,0 +1,18 @@
+<resources>
+
+    <dimen name="activity_margin_generic">10dp</dimen>
+
+    <dimen name="listview_padding">10dp</dimen>
+    <dimen name="listview_routes_text1_size">20sp</dimen>
+    <dimen name="listview_routes_text2_size">17sp</dimen>
+    <dimen name="listview_routes_padding_text2">15dp</dimen>
+
+    <dimen name="listview_routestops_text1_size">20sp</dimen>
+    <dimen name="listview_routestops_text2_size">17sp</dimen>
+    <dimen name="listview_routestops_padding_text2">15dp</dimen>
+
+    <dimen name="listview_departure_group_text1_size">18sp</dimen>
+    <dimen name="listview_departure_child_text1_size">12sp</dimen>
+
+
+</resources>
